@@ -1,28 +1,41 @@
-// Wklej swój token webhooka Discorda poniżej
+// Webhook URL Discorda
 const discordWebhookUrl = "https://discord.com/api/webhooks/1305568093958963302/HOfEAIM7-p_HilV91rnyxqe56qFA-AZTHoVtZK05i_cOisLxVrgQYwiCjkCNrHgAHXJH";
+
+// Mockowe dane logowania
+const validUsername = "admin";
+const validPassword = "granica123";
+
+// Funkcja logowania
+function zaloguj() {
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    if (username === validUsername && password === validPassword) {
+        document.getElementById("loginSection").style.display = "none";
+        document.getElementById("mainContent").style.display = "block";
+    } else {
+        document.getElementById("loginError").textContent = "Nieprawidłowa nazwa użytkownika lub hasło.";
+    }
+}
 
 // Funkcja dodająca zdarzenie do listy i wysyłająca powiadomienie na Discorda
 function dodajZdarzenie() {
-    // Pobieranie wartości z formularza
     const nazwaGracza = document.getElementById("nazwaGracza").value;
     const typZdarzenia = document.getElementById("typZdarzenia").value;
     const opis = document.getElementById("opis").value;
 
-    // Tworzenie obiektu zdarzenia
     const zdarzenie = {
         nazwaGracza,
         typZdarzenia,
         opis,
-        data: new Date().toLocaleString("pl-PL") // data i godzina w polskim formacie
+        data: new Date().toLocaleString("pl-PL")
     };
 
-    // Wyświetlenie zdarzenia na stronie
     const zdarzeniaLista = document.getElementById("zdarzeniaLista");
     const listItem = document.createElement("li");
     listItem.textContent = `${zdarzenie.data} - ${zdarzenie.nazwaGracza} - ${zdarzenie.typZdarzenia.toUpperCase()}: ${zdarzenie.opis}`;
     zdarzeniaLista.appendChild(listItem);
 
-    // Wysłanie danych do Discorda przez webhook
     fetch(discordWebhookUrl, {
         method: 'POST',
         headers: {
@@ -42,6 +55,5 @@ function dodajZdarzenie() {
         alert("Wystąpił problem z wysłaniem zdarzenia na Discorda.");
     });
 
-    // Czyszczenie formularza po dodaniu zdarzenia
     document.getElementById("zdarzenieForm").reset();
 }

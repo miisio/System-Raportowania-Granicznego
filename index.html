@@ -3,15 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Granica RP - Baza Danych</title>
+    <title>System Raportowania Granicznego</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <h1>Granica RP - Rejestracja Zdarzeń</h1>
+        <h1>System Raportowania Granicznego</h1>
     </header>
 
-    <main>
+    <!-- Sekcja logowania -->
+    <section id="loginSection">
+        <h2>Logowanie</h2>
+        <form id="loginForm">
+            <label for="username">Nazwa Użytkownika:</label>
+            <input type="text" id="username" required>
+
+            <label for="password">Hasło:</label>
+            <input type="password" id="password" required>
+
+            <button type="button" onclick="zaloguj()">Zaloguj się</button>
+        </form>
+        <p id="loginError" class="error"></p>
+    </section>
+
+    <!-- Sekcja główna, dostępna po zalogowaniu -->
+    <main id="mainContent" style="display: none;">
         <section id="dodajZdarzenie">
             <h2>Dodaj Zdarzenie</h2>
             <form id="zdarzenieForm">
