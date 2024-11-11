@@ -1,6 +1,7 @@
-// Webhook URL Discorda
-const discordWebhookUrlMandat = "https://discord.com/api/webhooks/1305617060402823309/RQXIaIDsJH-W8X7MBvgYGsgBSUJiInze_KOik63oX6kQqXTPFpapDs_LCzkJDRHJ357B";
-const discordWebhookUrlZdarzenie = "https://discord.com/api/webhooks/1305568093958963302/HOfEAIM7-p_HilV91rnyxqe56qFA-AZTHoVtZK05i_cOisLxVrgQYwiCjkCNrHgAHXJH";
+// Webhook URL dla mandatów
+const discordWebhookUrlMandat = "https://discord.com/api/webhooks/1305568093958963302/HOfEAIM7-p_HilV91rnyxqe56qFA-AZTHoVtZK05i_cOisLxVrgQYwiCjkCNrHgAHXJH";
+// Webhook URL dla nowych zdarzeń dyscyplinarnych
+const discordWebhookUrlDyscyplinarne = "https://discord.com/api/webhooks/1305621989087776778/MsIgza2EjHxSko6Mn0roZ-v-XLRygMCopcOenehBeHE2dY5kZC9AHsUSHiU-8dqe3J6Y";
 
 // Spersonalizowane dane logowania
 const validUsers = {
@@ -9,7 +10,7 @@ const validUsers = {
     "cezary.poranek": { password: "haslo789", name: "Kpr. SG Cezary Poranek" },
     "leonard.bielik": { password: "haslo101", name: "Ppłk SG Leonard Bielik" },
     "jan.kowalski": { password: "haslo202", name: "Szer. SG Jan Kowalski" },
-    "jan.kowalczyk": { password: "haslo303", name: "Szer. SG Jan Kowalczyk" }, // Nowy użytkownik
+    "jan.kowalczyk": { password: "haslo303", name: "Szer. SG Jan Kowalczyk" },
     "admin": { password: "granica123", name: "Administrator" },
     "wzd": { password: "bezpiecznosc123", name: "Wydział Zabezpieczeń Straży Granicznej" },
     "sg": { password: "straza123", name: "Zwykła Straż Graniczna" }
@@ -33,6 +34,11 @@ function zaloguj() {
         } else {
             document.body.classList.add("sgz");
             document.getElementById("mainContent").classList.add("sgz");
+        }
+
+        // Jeśli to Michał Nowacki, Leonard Bielik, lub Cezary Wieczorek, dodaj opcje dyscyplinarne
+        if (["michal.nowacki", "cezary.wieczorek", "leonard.bielik"].includes(username)) {
+            document.getElementById("dyscyplinarneOptions").style.display = "block";
         }
     } else {
         document.getElementById("loginError").textContent = "Nieprawidłowa nazwa użytkownika lub hasło.";
@@ -62,7 +68,10 @@ function dodajZdarzenie() {
     zdarzeniaLista.appendChild(listItem);
 
     // Wybór odpowiedniego webhooka w zależności od typu zdarzenia
-    const webhookUrl = zdarzenie.typZdarzenia === "mandat" ? discordWebhookUrlMandat : discordWebhookUrlZdarzenie;
+    let webhookUrl = discordWebhookUrlMandat;  // Domyślny webhook dla mandatów
+    if (typZdarzenia === "zatrzymanie") {
+        webhookUrl = discordWebhookUrlMandat;  // Możesz dodać inny webhook dla zatrzymań, jeśli chcesz
+    }
 
     // Wysyłanie powiadomienia na Discorda
     fetch(webhookUrl, {
@@ -82,4 +91,38 @@ function dodajZdarzenie() {
 
     // Wyczyść formularz
     document.getElementById("zdarzenieForm").reset();
+}
+
+// Funkcja dodająca zdarzenie dyscyplinarne
+function dodajDyscyplinarne() {
+    const typDyscypliny = document.getElementById("typDyscypliny").value;
+    const opisDyscypliny = document.getElementById("opisDyscypliny").value;
+    const data = new Date().toLocaleString("pl-PL");
+    const userName = sessionStorage.getItem("userName");
+
+    const dyscyplinarneZdarzenie = {
+        typDyscypliny,
+        opisDyscypliny,
+        data,
+        userName
+    };
+
+    // Wysyłanie powiadomienia o zdarzeniu dyscyplinarnym na Discorda
+    fetch(discordWebhookUrlDyscyplinarne, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            username: "System Raportowania Granicznego",
+            avatar_url: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Flag_of_Poland.svg/1200px-Flag_of_Poland.svg.png",
+            embeds: [{
+                title: `Nowe działanie dyscyplinarne: ${dyscyplinarneZdarzenie.typDyscypliny}`,
+                description: `Opis: ${dyscyplinarneZdarzenie.opisDyscypliny}\nWystawione przez: ${dyscyplinarneZdarzenie.userName}`,
+                color: 15548997,
+                footer: { text: `Data: ${dyscyplinarneZdarzenie.data}` }
+            }]
+        })
+    });
+
+    // Wyczyść formularz
+    document.getElementById("dyscyplinarneOptions").reset();
 }

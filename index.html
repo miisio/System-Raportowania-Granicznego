@@ -57,6 +57,23 @@
             </form>
         </section>
 
+        <!-- Opcje Dyscyplinarne -->
+        <section id="dyscyplinarneOptions" style="display: none;">
+            <h3>Opcje Dyscyplinarne</h3>
+            <label for="typDyscypliny">Typ Działania:</label>
+            <select id="typDyscypliny">
+                <option value="zawieszenie">Zawieszenie</option>
+                <option value="reprymenda">Reprymenda</option>
+                <option value="zwolnienie">Zwolnienie Dyscyplinarne</option>
+            </select>
+
+            <label for="opisDyscypliny">Opis:</label>
+            <textarea id="opisDyscypliny" required></textarea>
+
+            <button type="button" onclick="dodajDyscyplinarne()">Zarejestruj Działanie</button>
+        </section>
+
+        <!-- Lista Zdarzeń -->
         <section id="listaZdarzen">
             <h2>Lista Zdarzeń</h2>
             <ul id="zdarzeniaLista"></ul>
