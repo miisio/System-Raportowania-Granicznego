@@ -1,6 +1,6 @@
 /* Ogólne stylowanie */
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Open Sans', sans-serif;
     background-color: #f5f7fa;
     margin: 0;
     padding: 0;
@@ -31,6 +31,7 @@ header h1 {
 
 h1, h2 {
     font-weight: 600;
+    animation: fadeIn 1s ease-out;
 }
 
 section {
@@ -41,6 +42,8 @@ section {
     margin-top: 20px;
     width: 90%;
     max-width: 700px;
+    opacity: 0;
+    animation: slideUp 1s forwards;
 }
 
 label {
@@ -90,4 +93,43 @@ li {
     background-color: #ecf0f1;
     margin: 5px 0;
     border-radius: 5px;
+}
+
+/* Animacje */
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes slideUp {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Stylowanie dla WZD */
+.wzd {
+    background-color: #1abc9c;
+    color: white;
+}
+
+.wzd h1 {
+    color: white;
+}
+
+.wzd button {
+    background-color: #16a085;
+}
+
+/* Stylowanie dla Straży Granicznej */
+.sgz {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.sgz h1 {
+    color: white;
+}
+
+.sgz button {
+    background-color: #c0392b;
 }
