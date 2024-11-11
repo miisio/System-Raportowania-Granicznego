@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Granica RP - Baza Danych</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Granica RP - Rejestracja Zdarzeń</h1>
+    </header>
+
+    <main>
+        <section id="dodajZdarzenie">
+            <h2>Dodaj Zdarzenie</h2>
+            <form id="zdarzenieForm">
+                <label for="nazwaGracza">Nazwa Gracza:</label>
+                <input type="text" id="nazwaGracza" required>
+
+                <label for="typZdarzenia">Typ Zdarzenia:</label>
+                <select id="typZdarzenia">
+                    <option value="mandat">Mandat</option>
+                    <option value="zatrzymanie">Zatrzymanie</option>
+                </select>
+
+                <label for="opis">Opis:</label>
+                <textarea id="opis" required></textarea>
+
+                <button type="button" onclick="dodajZdarzenie()">Dodaj Zdarzenie</button>
+            </form>
+        </section>
+
+        <section id="listaZdarzen">
+            <h2>Lista Zdarzeń</h2>
+            <ul id="zdarzeniaLista"></ul>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
