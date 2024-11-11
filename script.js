@@ -2,15 +2,18 @@
 const discordWebhookUrl = "https://discord.com/api/webhooks/1305568093958963302/HOfEAIM7-p_HilV91rnyxqe56qFA-AZTHoVtZK05i_cOisLxVrgQYwiCjkCNrHgAHXJH";
 
 // Mockowe dane logowania
-const validUsername = "admin";
-const validPassword = "granica123";
+const validUsers = {
+    "admin": "granica123",   // Administrator
+    "wydzial": "straszona"   // Wydział Zabezpieczeń Straży Granicznej
+};
 
 // Funkcja logowania
 function zaloguj() {
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
 
-    if (username === validUsername && password === validPassword) {
+    if (validUsers[username] && validUsers[username] === password) {
+        sessionStorage.setItem("username", username);  // Zapisywanie użytkownika w sesji
         document.getElementById("loginSection").style.display = "none";
         document.getElementById("mainContent").style.display = "block";
     } else {
@@ -18,23 +21,44 @@ function zaloguj() {
     }
 }
 
-// Funkcja dodająca zdarzenie do listy i wysyłająca powiadomienie na Discorda
+// Funkcja dodająca zdarzenie do listy i wysyłająca powiadomienie na Discorda w formacie embed
 function dodajZdarzenie() {
     const nazwaGracza = document.getElementById("nazwaGracza").value;
     const typZdarzenia = document.getElementById("typZdarzenia").value;
     const opis = document.getElementById("opis").value;
+    const data = new Date().toLocaleString("pl-PL");
 
     const zdarzenie = {
         nazwaGracza,
         typZdarzenia,
         opis,
-        data: new Date().toLocaleString("pl-PL")
+        data
     };
 
+    // Dodawanie zdarzenia do listy na stronie
     const zdarzeniaLista = document.getElementById("zdarzeniaLista");
     const listItem = document.createElement("li");
     listItem.textContent = `${zdarzenie.data} - ${zdarzenie.nazwaGracza} - ${zdarzenie.typZdarzenia.toUpperCase()}: ${zdarzenie.opis}`;
     zdarzeniaLista.appendChild(listItem);
+
+    // Tworzenie embed dla Discorda
+    const embed = {
+        title: `Nowe Zdarzenie - ${zdarzenie.typZdarzenia.toUpperCase()}`,
+        description: `${zdarzenie.nazwaGracza} - ${zdarzenie.opis}`,
+        fields: [
+            {
+                name: "Typ Zdarzenia",
+                value: zdarzenie.typZdarzenia,
+                inline: true
+            },
+            {
+                name: "Data",
+                value: zdarzenie.data,
+                inline: true
+            }
+        ],
+        color: 0x3498db, // Kolor embed
+    };
 
     fetch(discordWebhookUrl, {
         method: 'POST',
@@ -42,7 +66,7 @@ function dodajZdarzenie() {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            content: `**Nowe zdarzenie:** ${zdarzenie.typZdarzenia.toUpperCase()}\n**Gracz:** ${zdarzenie.nazwaGracza}\n**Opis:** ${zdarzenie.opis}\n**Data:** ${zdarzenie.data}`
+            embeds: [embed]
         })
     }).then(response => {
         if (response.ok) {
