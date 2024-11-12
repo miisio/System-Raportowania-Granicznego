@@ -5,16 +5,21 @@ const discordWebhookUrlDyscyplinarne = "https://discord.com/api/webhooks/1305621
 
 // Spersonalizowane dane logowania
 const validUsers = {
+    // Zarząd
     "michal.nowacki": { password: "haslo123", name: "Płk SG Michał Nowacki" },
     "cezary.wieczorek": { password: "haslo456", name: "Kpt. SG Cezary Wieczorek" },
-    "cezary.poranek": { password: "haslo789", name: "Kpr. SG Cezary Poranek" },
     "leonard.bielik": { password: "haslo101", name: "Ppłk SG Leonard Bielik" },
+    // Straznicy
+    "cezary.poranek": { password: "haslo789", name: "Kpr. SG Cezary Poranek" },
     "jan.kowalski": { password: "haslo202", name: "Szer. SG Jan Kowalski" },
     "jan.kowalczyk": { password: "haslo303", name: "Szer. SG Jan Kowalczyk" },
+    "adam.cipkiewicz": { password: "haslo404", name: "Szer. SG Adam Cipkiewicz" } 
+    // administratorzy
     "admin": { password: "granica123", name: "Administrator" },
     "wzd": { password: "bezpiecznosc123", name: "Wydział Zabezpieczeń Straży Granicznej" },
-    "sg": { password: "straza123", name: "Zwykła Straż Graniczna" }
+    "sg": { password: "straza123", name: "Zwykła Straż Graniczna" },
 };
+
 
 // Funkcja logowania
 function zaloguj() {
