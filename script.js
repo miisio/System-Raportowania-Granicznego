@@ -5,24 +5,22 @@ const discordWebhookUrlDyscyplinarne = "https://discord.com/api/webhooks/1305621
 
 // Spersonalizowane dane logowania
 const validUsers = {
-    // Zarząd
     "michal.nowacki": { password: "haslo123", name: "Płk SG Michał Nowacki" },
     "cezary.wieczorek": { password: "haslo456", name: "Kpt. SG Cezary Wieczorek" },
     "leonard.bielik": { password: "haslo101", name: "Ppłk SG Leonard Bielik" },
-    // Straznicy
     "cezary.poranek": { password: "haslo789", name: "Kpr. SG Cezary Poranek" },
     "jan.kowalski": { password: "haslo202", name: "Szer. SG Jan Kowalski" },
     "jan.kowalczyk": { password: "haslo303", name: "Szer. SG Jan Kowalczyk" },
-    "adam.cipkiewicz": { password: "haslo404", name: "Szer. SG Adam Cipkiewicz" } 
-    // administratorzy
+    "adam.cipkiewicz": { password: "haslo404", name: "Szer. SG Adam Cipkiewicz" },
     "admin": { password: "granica123", name: "Administrator" },
     "wzd": { password: "bezpiecznosc123", name: "Wydział Zabezpieczeń Straży Granicznej" },
     "sg": { password: "straza123", name: "Zwykła Straż Graniczna" },
 };
 
-
 // Funkcja logowania
-function zaloguj() {
+function zaloguj(event) {
+    event.preventDefault();  // Zatrzymuje wysyłanie formularza
+
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
 
@@ -72,62 +70,53 @@ function dodajZdarzenie() {
     listItem.textContent = `${zdarzenie.data} - ${zdarzenie.typZdarzenia}: ${zdarzenie.opis} (${zdarzenie.nazwaGracza}) - Wystawione przez: ${zdarzenie.userName}`;
     zdarzeniaLista.appendChild(listItem);
 
-    // Wybór odpowiedniego webhooka w zależności od typu zdarzenia
-    let webhookUrl = discordWebhookUrlMandat;  // Domyślny webhook dla mandatów
-    if (typZdarzenia === "zatrzymanie") {
-        webhookUrl = discordWebhookUrlMandat;  // Możesz dodać inny webhook dla zatrzymań, jeśli chcesz
+    // Wybór odpowiedniego webhooka dla typu zdarzenia
+    let webhookUrl = discordWebhookUrlMandat;
+    if (typZdarzenia === "mandat") {
+        webhookUrl = discordWebhookUrlMandat;
+    } else {
+        webhookUrl = discordWebhookUrlDyscyplinarne;
     }
 
-    // Wysyłanie powiadomienia na Discorda
+    // Wysyłanie zdarzenia do Discorda
+    const embedData = {
+        content: `Nowe zdarzenie: ${typZdarzenia}`,
+        embeds: [{
+            title: `Zdarzenie: ${typZdarzenia}`,
+            description: `${opis}`,
+            fields: [
+                {
+                    name: "Gracz",
+                    value: nazwaGracza,
+                    inline: true
+                },
+                {
+                    name: "Data",
+                    value: data,
+                    inline: true
+                },
+                {
+                    name: "Wystawiający",
+                    value: userName,
+                    inline: true
+                }
+            ],
+            footer: {
+                text: `Typ: ${typZdarzenia}`,
+            }
+        }]
+    };
+
     fetch(webhookUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            username: "System Raportowania Granicznego",
-            avatar_url: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Flag_of_Poland.svg/1200px-Flag_of_Poland.svg.png",
-            embeds: [{
-                title: `Nowe zdarzenie: ${zdarzenie.typZdarzenia}`,
-                description: `Nazwa gracza: ${zdarzenie.nazwaGracza}\nOpis: ${zdarzenie.opis}\nWystawione przez: ${zdarzenie.userName}`,
-                color: 3447003,
-                footer: { text: `Data: ${zdarzenie.data}` }
-            }]
-        })
+        body: JSON.stringify(embedData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Zdarzenie wysłane do Discorda:', data);
+    })
+    .catch(error => {
+        console.error('Błąd podczas wysyłania zdarzenia do Discorda:', error);
     });
-
-    // Wyczyść formularz
-    document.getElementById("zdarzenieForm").reset();
-}
-
-// Funkcja dodająca zdarzenie dyscyplinarne
-function dodajDyscyplinarne() {
-    const typDyscypliny = document.getElementById("typDyscypliny").value;
-    const opisDyscypliny = document.getElementById("opisDyscypliny").value;
-    const data = new Date().toLocaleString("pl-PL");
-    const userName = sessionStorage.getItem("userName");
-
-    const dyscyplinarneZdarzenie = {
-        typDyscypliny,
-        opisDyscypliny,
-        data,
-        userName
-    };
-
-    // Wysyłanie powiadomienia o zdarzeniu dyscyplinarnym na Discorda
-    fetch(discordWebhookUrlDyscyplinarne, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            username: "System Raportowania Granicznego",
-            avatar_url: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Flag_of_Poland.svg/1200px-Flag_of_Poland.svg.png",
-            embeds: [{
-                title: `Nowe działanie dyscyplinarne: ${dyscyplinarneZdarzenie.typDyscypliny}`,
-                description: `Opis: ${dyscyplinarneZdarzenie.opisDyscypliny}\nWystawione przez: ${dyscyplinarneZdarzenie.userName}`,
-                color: 15548997,
-                footer: { text: `Data: ${dyscyplinarneZdarzenie.data}` }
-            }]
-        })
-    });
-
-    // Wyczyść formularz
-    document.getElementById("dyscyplinarneOptions").reset();
 }
