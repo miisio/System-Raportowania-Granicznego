@@ -1,146 +1,109 @@
+/* Ogólne stylowanie */
 body {
     font-family: 'Open Sans', sans-serif;
-    background-color: #f1f1f1;
+    background-color: #f5f7fa;
     margin: 0;
     padding: 0;
-    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
 }
 
 /* Nagłówek */
 header {
-    background-color: #004f99;
-    color: white;
+    background-color: #2c3e50;
+    color: #ecf0f1;
     padding: 20px;
+    width: 100%;
+    text-align: center;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    position: relative;
 }
 
-header h1 {
-    margin-left: 15px;
-    font-size: 24px;
-    font-weight: 600;
-}
-
+/* Flaga Polski */
 .polska-flaga {
-    width: 50px;
-    height: auto;
+    height: 30px;
+    margin-right: 10px;
 }
 
-/* Formularz logowania */
-#loginSection {
-    background-color: white;
-    padding: 30px;
-    margin: 30px auto;
-    width: 350px;
-    border: 1px solid #ddd;
+/* Nagłówek */
+h1 {
+    font-size: 2em;
 }
 
-form {
-    display: flex;
-    flex-direction: column;
+/* Formularze i inne sekcje */
+section {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    width: 90%;
+    max-width: 700px;
+    opacity: 0;
+    animation: slideUp 1s forwards;
 }
 
-form label {
-    font-size: 14px;
-    margin-bottom: 5px;
-    font-weight: 500;
+label {
+    display: block;
+    margin-top: 10px;
 }
 
-form input,
-form select,
-form textarea {
-    padding: 12px;
-    margin-bottom: 15px;
-    font-size: 16px;
-    border: 1px solid #ddd;
-    background-color: #f9f9f9;
+input, select, textarea, button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #bdc3c7;
 }
 
 button {
-    background-color: #004f99;
+    background-color: #3498db;
     color: white;
-    border: none;
-    padding: 15px;
-    font-size: 16px;
-    font-weight: 600;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: #003d77;
+    background-color: #2980b9;
 }
 
 .error {
     color: red;
-    font-size: 14px;
-    margin-top: 10px;
-    text-align: center;
+    font-size: 0.9em;
 }
 
-/* Główna zawartość strony */
-#mainContent {
-    padding: 30px;
-    margin: 30px auto;
-    width: 80%;
-    max-width: 1000px;
+textarea {
+    height: 100px;
 }
 
-h2, h3 {
-    color: #004f99;
+ul {
+    list-style: none;
+    padding-left: 0;
 }
 
-h2 {
-    font-size: 26px;
-    margin-bottom: 20px;
+li {
+    padding: 10px;
+    background-color: #ecf0f1;
+    margin: 5px 0;
+    border-radius: 5px;
 }
 
-#zdarzeniaLista {
-    list-style-type: none;
-    padding: 0;
-}
-
-#zdarzeniaLista li {
-    background-color: #ffffff;
-    padding: 15px;
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
-}
-
-#zdarzeniaLista li span {
-    font-weight: 600;
-}
-
-#zdarzeniaLista li .details {
-    color: #555;
-}
-
-/* Sekcja dyscyplinarna */
-#dyscyplinarneOptions {
-    margin-top: 30px;
-    padding: 20px;
-    background-color: #eef2ff;
-    border: 1px solid #ddd;
-}
-
-#dyscyplinarneOptions h3 {
-    margin-top: 0;
-    color: #003d77;
-}
-
-.wzd {
-    background-color: #e5f0ff;
-}
-
-.sgz {
-    background-color: #f0e5e5;
+/* Animacje */
+@keyframes slideUp {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
 }
 
 /* Stopka */
 footer {
-    background-color: #004f99;
-    color: white;
+    margin-top: auto;
+    padding: 10px;
+    background-color: #2c3e50;
+    color: #ecf0f1;
     text-align: center;
-    padding: 20px;
-    font-size: 14px;
+    width: 100%;
 }
