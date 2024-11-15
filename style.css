@@ -1,108 +1,97 @@
-/* Ogólne stylowanie */
 body {
     font-family: 'Open Sans', sans-serif;
-    background-color: #f5f7fa;
+    background-color: #f4f4f4;
     margin: 0;
     padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
 }
 
-header {
-    background-color: #2c3e50;
-    color: #ecf0f1;
-    padding: 20px;
-    width: 100%;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-}
-
-/* Flaga Polski */
+/* Flaga */
 .polska-flaga {
-    height: 30px;
-    margin-right: 10px;
+    width: 50px;
+    height: auto;
 }
 
 /* Nagłówek */
-h1 {
-    font-size: 2em;
-}
-
-/* Formularze i inne sekcje */
-section {
-    background-color: #ffffff;
+header {
+    background-color: #004f99;
+    color: white;
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
-    width: 90%;
-    max-width: 700px;
-    opacity: 0;
-    animation: slideUp 1s forwards;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-label {
-    display: block;
-    margin-top: 10px;
+header h1 {
+    margin-left: 10px;
 }
 
-input, select, textarea, button {
-    width: 100%;
+/* Formularz logowania */
+#loginSection {
+    padding: 20px;
+    background-color: white;
+    margin-top: 30px;
+    width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form label {
+    margin-bottom: 5px;
+}
+
+form input,
+form select,
+form textarea {
+    margin-bottom: 15px;
     padding: 10px;
-    margin-top: 5px;
-    border-radius: 5px;
-    border: 1px solid #bdc3c7;
+    font-size: 16px;
 }
 
 button {
-    background-color: #3498db;
+    background-color: #004f99;
     color: white;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: #2980b9;
+    background-color: #003d77;
 }
 
 .error {
     color: red;
-    font-size: 0.9em;
 }
 
-textarea {
-    height: 100px;
+/* Sekcja główna */
+#mainContent {
+    display: block;
+    margin: 20px;
 }
 
-ul {
-    list-style: none;
-    padding-left: 0;
+#zdarzeniaLista {
+    list-style-type: none;
+    padding: 0;
 }
 
-li {
+#zdarzeniaLista li {
+    background-color: #fff;
     padding: 10px;
-    background-color: #ecf0f1;
-    margin: 5px 0;
-    border-radius: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
 }
 
-/* Animacje */
-@keyframes slideUp {
-    0% { opacity: 0; transform: translateY(20px); }
-    100% { opacity: 1; transform: translateY(0); }
+/* Opcje dyscyplinarne */
+.wzd {
+    background-color: #e5f0ff;
 }
 
-/* Stopka */
-footer {
-    margin-top: auto;
-    padding: 10px;
-    background-color: #2c3e50;
-    color: #ecf0f1;
-    text-align: center;
-    width: 100%;
+.sgz {
+    background-color: #f0e5e5;
 }
